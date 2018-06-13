@@ -1,5 +1,6 @@
 package model.entity;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,7 +8,7 @@ import java.io.Serializable;
  * Created by Sh_Khorsandi on 6/11/2018.
  */
 @Entity
-@Table(name = "USER_TEST")
+@Table(name = "TB_USER")
 public class User implements Serializable{
 
     public User() {
@@ -23,41 +24,45 @@ public class User implements Serializable{
         this.userName = userName;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @Column(name = "USERNAME")
+    private int userId;
     private String userName;
-
-    @Column(name = "AMOUNT")
     private Integer amount;
-
-    @Column(name = "ACCESS")
     private Character access;
 
+    @GeneratedValue
+    @Column(name = "user_id")
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
+
+    @Id
+    @Column(name = "user_name", nullable = false, unique = true)
     public String getUserName() {
         return userName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    @Column(name = "amount", nullable =  false)
     public Integer getAmount() {
         return amount;
     }
-
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
+    @Column(name = "user_access", nullable = false)
     public Character getAccess() {
         return access;
     }
-
     public void setAccess(Character access) {
         this.access = access;
     }
+
+
 }

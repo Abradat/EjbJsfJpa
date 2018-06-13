@@ -8,6 +8,7 @@
     <title>Insert title here</title>
 </h:head>
 <h:body>
+    <h2>For Inserting User</h2>
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Username" />
@@ -26,5 +27,54 @@
                              action="#{userController.insertUser(userController.user)}"></h:commandButton>
         </h:panelGrid>
     </h:form>
+
+    <h2>For Finding User</h2>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Username" />
+            <h:inputText value="#{userController.user.userName}">]
+            </h:inputText>
+            <h:outputLabel></h:outputLabel>
+            <h:commandButton value="Find"
+                             action="#{userController.readUser(userController.user)}"></h:commandButton>
+        </h:panelGrid>
+    </h:form>
+    <h:outputText value="username is : #{userController.resultUser.userName} "></h:outputText>
+    <h:outputText value="user amount is : #{userController.resultUser.amount} "></h:outputText>
+    <h:outputText value="user access is : #{userController.resultUser.access} "></h:outputText>
+
+    <h2>For changing user's amount</h2>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Username" />
+            <h:inputText value="#{userController.user.userName}">]
+            </h:inputText>
+            <h:outputLabel value="New Amount" />
+            <h:inputText value="#{userController.user.amount}">]
+            </h:inputText>
+            <h:outputLabel></h:outputLabel>
+            <h:commandButton value="Find"
+                             action="#{userController.changeUser(userController.user)}"></h:commandButton>
+        </h:panelGrid>
+    </h:form>
+
+    <h:dataTable value = "#{userController.usersFromDB}" var = "user">
+
+        <h:column>
+            <f:facet name = "header">Name</f:facet>
+            #{user.userName}
+        </h:column>
+
+        <h:column>
+            <f:facet name = "header">Amount</f:facet>
+            #{user.amount}
+        </h:column>
+
+        <h:column>
+            <f:facet name = "header">Access</f:facet>
+            #{user.access}
+        </h:column>
+
+    </h:dataTable>
 </h:body>
 </html>

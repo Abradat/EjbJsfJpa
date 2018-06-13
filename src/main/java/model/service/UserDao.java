@@ -6,12 +6,15 @@ package model.service;
 import model.entity.User;
 
 import javax.ejb.Local;
+import java.util.ArrayList;
+import java.util.List;
 
 @Local
 public interface UserDao {
     void insertUser(User usr);
-    void readUser(User usr);
+    User readUser(User usr);
     void changeUser(User usr);
+    public List<User>readUsers();
     //public void sortUser
 
 }
