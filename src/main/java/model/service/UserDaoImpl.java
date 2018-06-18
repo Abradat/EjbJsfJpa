@@ -10,51 +10,82 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.util.List;
 
-//import model.entity.User;
+import model.entity.User;
 
 @Stateless
 public class UserDaoImpl implements UserDao {
 
-    //EntityManagerFactory emf = Persistence.createEntityManagerFactory("UserApp");
-    //private EntityManager entityManager;
 
     @PersistenceContext(name = "UserApp", unitName = "UserApp")
     private EntityManager entityManager;
     @Override
-    public void insertUser(User user) {
-        User tmpUser = entityManager.find(User.class, user.getUserName());
+    public boolean insertUser(User user) {
+        //User tmpUser = entityManager.find(User.class, user.getUserName());
+        //Query query = entityManager.createNamedQuery("SELECT c FROM TB_USER WHERE c.user_name = :user_name", User.class);
         //System.out.println(tmpUser + "\n\n\n\n\n\n");
+        //TypedQuery<User> query = entityManager.createNamedQuery("User.findByUsername", User.class);
+        //query.setParameter("user_name", user.getUserName());
+        //User tmpUser = entityManager.createQuery()
+        //User tmpUser = query.getSingleResult();
+        TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
+        query.setParameter("userName", user.getUserName());
+        User tmpUser = null;
+        try {
+            tmpUser = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+
         if(tmpUser == null) {
             entityManager.persist(user);
+
+            return true;
         }
         else {
-            System.out.println("User is already in the database");
+            return false;
         }
-        //entityManager.persist(user);
 
     }
 
     @Override
     public User readUser(User user) {
 
-
-        User myUser = entityManager.find(User.class, user.getUserName());
+        //User myUser = entityManager.find(User.class, user.getUserName());
+        User myUser = null;
+        TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
+        query.setParameter("userName", user.getUserName());
+        try {
+            myUser = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
         return myUser;
     }
 
     @Override
-    public void changeUser(User user) {
-        User myUser = entityManager.find(User.class, user.getUserName());
+    public int changeUser(User user) {
+        //User myUser = entityManager.find(User.class, user.getUserName());
+        User myUser = null;
+        TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
+        query.setParameter("userName", user.getUserName());
+        try {
+            myUser = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+
         if(myUser != null) {
             if(myUser.getAccess() == 'w') {
                 myUser.setAmount(user.getAmount());
+                return 1; // 1 for success changing
             }
             else {
-                System.out.println("User does not have read permission");
+                return 2; // for wrong permission
             }
         }
         else {
-            System.out.println("User does not exist");
+            //System.out.println("User does not exist");
+            return 3; // user does not exists
         }
 
     }

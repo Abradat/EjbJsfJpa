@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Insert title here</title>
+    <title>Main Page</title>
 </h:head>
 <h:body>
     <h2>For Inserting User</h2>
@@ -15,33 +13,39 @@
             <h:inputText value="#{userController.user.userName}">]
             </h:inputText>
             <h:outputLabel value="Amount" />
-            <h:inputText value="#{userController.user.amount}">
+            <h:inputText id="insert_amount" value="#{userController.user.amount}" binding="#{userController.insertAmountComponent}">
                 <f:convertNumber />
             </h:inputText>
-            <h:outputLabel value="Access" />
-            <h:inputText value="#{userController.user.access}">
+            <br><h:message for="insert_amount" style="color:red" /></br>
 
-            </h:inputText>
-            <h:outputLabel></h:outputLabel>
+
+            <h:outputLabel value="Access" />
+
+            <h:selectOneMenu value = "#{userController.user.access}">
+                <f:selectItem itemValue = "r" itemLabel = "read" />
+                <f:selectItem itemValue = "w" itemLabel = "write" />
+            </h:selectOneMenu>
+            <h:outputLabel id="save" binding="#{userController.saveComponent}"></h:outputLabel>
+            <h:message for="save" style="color: red"></h:message>
             <h:commandButton value="Save"
-                             action="#{userController.insertUser(userController.user)}"></h:commandButton>
+                             action="#{userController.insertUser(userController.user)}" >
+            </h:commandButton>
+
         </h:panelGrid>
     </h:form>
-
     <h2>For Finding User</h2>
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Username" />
             <h:inputText value="#{userController.user.userName}">]
             </h:inputText>
-            <h:outputLabel></h:outputLabel>
+            <h:outputLabel id="find" binding="#{userController.findComponent}"></h:outputLabel>
+            <h:message for="find" style="color: red"></h:message>
             <h:commandButton value="Find"
                              action="#{userController.readUser(userController.user)}"></h:commandButton>
         </h:panelGrid>
     </h:form>
-    <h:outputText value="username is : #{userController.resultUser.userName} "></h:outputText>
-    <h:outputText value="user amount is : #{userController.resultUser.amount} "></h:outputText>
-    <h:outputText value="user access is : #{userController.resultUser.access} "></h:outputText>
+
 
     <h2>For changing user's amount</h2>
     <h:form>
@@ -49,16 +53,23 @@
             <h:outputLabel value="Username" />
             <h:inputText value="#{userController.user.userName}">]
             </h:inputText>
-            <h:outputLabel value="New Amount" />
-            <h:inputText value="#{userController.user.amount}">]
+            <h:outputLabel  value="New Amount" />
+            <h:inputText id="change_amount" value="#{userController.user.amount}" binding="#{userController.changeAmountComponent}">
+                <f:convertNumber />
+                <!--<f:validateLongRange minimum="1" maximum="9999999999" />-->
             </h:inputText>
-            <h:outputLabel></h:outputLabel>
-            <h:commandButton value="Find"
+            <br><h:message for="change_amount" style="color:red" /></br>
+            <h:outputLabel id="change" binding="#{userController.changeComponent}"></h:outputLabel>
+
+            <h:commandButton value="Change"
                              action="#{userController.changeUser(userController.user)}"></h:commandButton>
+
         </h:panelGrid>
+        <h:message for="change" style="color: red"></h:message>
     </h:form>
 
-    <h:dataTable value = "#{userController.usersFromDB}" var = "user">
+
+    <h:dataTable id="myTable" value = "#{userController.users}" var = "user">
 
         <h:column>
             <f:facet name = "header">Name</f:facet>

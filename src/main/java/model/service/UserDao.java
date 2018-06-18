@@ -11,10 +11,9 @@ import java.util.List;
 
 @Local
 public interface UserDao {
-    void insertUser(User usr);
+    boolean insertUser(User usr);
     User readUser(User usr);
-    void changeUser(User usr);
+    int changeUser(User usr);
     public List<User>readUsers();
-    //public void sortUser
 
 }

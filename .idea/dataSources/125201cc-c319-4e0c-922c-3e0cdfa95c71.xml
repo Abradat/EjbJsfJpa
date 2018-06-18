@@ -4,9 +4,9 @@
     <root id="1"/>
     <schema id="2" parent="1" name="TEST">
       <ObjectId>141</ObjectId>
-      <IntrospectionTimestamp>2018-06-13.14:19:52</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-06-18.16:59:32</IntrospectionTimestamp>
       <CreatedTimestamp>2018-05-23.09:19:44</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.14:19:47</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -158,9 +158,9 @@
       <SequenceIdentity>1</SequenceIdentity>
     </sequence>
     <sequence id="51" parent="2" name="HIBERNATE_SEQUENCE">
-      <ObjectId>187953</ObjectId>
-      <CreatedTimestamp>2018-06-13.14:03:26</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.14:03:26</ModifiedTimestamp>
+      <ObjectId>188219</ObjectId>
+      <CreatedTimestamp>2018-06-18.16:59:17</CreatedTimestamp>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
       <SequenceIdentity>1</SequenceIdentity>
     </sequence>
     <sequence id="52" parent="2" name="USER_ID_SEQ">
@@ -182,9 +182,9 @@
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="55" parent="2" name="TB_USER">
-      <ObjectId>187961</ObjectId>
-      <CreatedTimestamp>2018-06-13.14:19:47</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.14:19:47</ModifiedTimestamp>
+      <ObjectId>188220</ObjectId>
+      <CreatedTimestamp>2018-06-18.16:59:17</CreatedTimestamp>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="56" parent="2" name="USERS">
@@ -246,9 +246,9 @@
       <Events>I</Events>
       <Turn>before-row</Turn>
     </trigger>
-    <column id="65" parent="55" name="USER_NAME">
+    <column id="65" parent="55" name="USER_ID">
       <Position>1</Position>
-      <DataType>VARCHAR2(255)|0</DataType>
+      <DataType>NUMBER(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="66" parent="55" name="USER_ACCESS">
@@ -258,41 +258,56 @@
     </column>
     <column id="67" parent="55" name="AMOUNT">
       <Position>3</Position>
-      <DataType>NUMBER(10)|0</DataType>
+      <DataType>NUMBER(19)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="68" parent="55" name="USER_ID">
+    <column id="68" parent="55" name="USER_NAME">
       <Position>4</Position>
-      <DataType>NUMBER(10)|0</DataType>
+      <DataType>VARCHAR2(255)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <index id="69" parent="55" name="SYS_C0041908">
-      <ObjectId>187962</ObjectId>
+    <index id="69" parent="55" name="SYS_C0042009">
+      <ObjectId>188221</ObjectId>
       <NameSurrogate>1</NameSurrogate>
-      <CreatedTimestamp>2018-06-13.14:19:47</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.14:19:47</ModifiedTimestamp>
+      <CreatedTimestamp>2018-06-18.16:59:17</CreatedTimestamp>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>USER_ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="70" parent="55" name="UK_AA4N0E6P2OA8KF3IRLEMVUMKM">
+      <ObjectId>188222</ObjectId>
+      <CreatedTimestamp>2018-06-18.16:59:17</CreatedTimestamp>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
       <TablespaceName>USERS</TablespaceName>
       <ColNames>USER_NAME</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="70" parent="55" name="SYS_C0041908">
+    <key id="71" parent="55" name="SYS_C0042009">
       <NameSurrogate>1</NameSurrogate>
-      <ModifiedTimestamp>2018-06-13.14:19:47</ModifiedTimestamp>
-      <ColNames>USER_NAME</ColNames>
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
+      <ColNames>USER_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
-      <UnderlyingIndexName>SYS_C0041908</UnderlyingIndexName>
+      <UnderlyingIndexName>SYS_C0042009</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="71" parent="56" name="ID">
+    <key id="72" parent="55" name="UK_AA4N0E6P2OA8KF3IRLEMVUMKM">
+      <ModifiedTimestamp>2018-06-18.16:59:17</ModifiedTimestamp>
+      <ColNames>USER_NAME</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>UK_AA4N0E6P2OA8KF3IRLEMVUMKM</UnderlyingIndexName>
+    </key>
+    <column id="73" parent="56" name="ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="72" parent="56" name="USERNAME">
+    <column id="74" parent="56" name="USERNAME">
       <Position>2</Position>
       <DataType>VARCHAR2(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="73" parent="56" name="SYS_C0041879">
+    <index id="75" parent="56" name="SYS_C0041879">
       <ObjectId>187557</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2018-05-30.13:38:51</CreatedTimestamp>
@@ -301,7 +316,7 @@
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="74" parent="56" name="USERS_USERNAME_UINDEX">
+    <index id="76" parent="56" name="USERS_USERNAME_UINDEX">
       <ObjectId>187560</ObjectId>
       <CreatedTimestamp>2018-05-30.13:55:32</CreatedTimestamp>
       <ModifiedTimestamp>2018-05-30.13:55:32</ModifiedTimestamp>
@@ -309,7 +324,7 @@
       <ColNames>USERNAME</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="75" parent="56" name="SYS_C0041879">
+    <key id="77" parent="56" name="SYS_C0041879">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2018-05-30.13:38:51</ModifiedTimestamp>
       <ColNames>ID</ColNames>
@@ -317,34 +332,34 @@
       <UnderlyingIndexName>SYS_C0041879</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <trigger id="76" parent="56" name="TRG_USR_ID">
+    <trigger id="78" parent="56" name="TRG_USR_ID">
       <ObjectId>187563</ObjectId>
       <CreatedTimestamp>2018-05-30.15:03:06</CreatedTimestamp>
       <ModifiedTimestamp>2018-05-30.15:12:45</ModifiedTimestamp>
       <Events>I</Events>
       <Turn>before-row</Turn>
     </trigger>
-    <column id="77" parent="57" name="USER_ID">
+    <column id="79" parent="57" name="USER_ID">
       <Position>1</Position>
       <DataType>NUMBER(5)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="78" parent="57" name="USERNAME">
+    <column id="80" parent="57" name="USERNAME">
       <Position>2</Position>
       <DataType>VARCHAR2(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="79" parent="57" name="AMOUNT">
+    <column id="81" parent="57" name="AMOUNT">
       <Position>3</Position>
       <DataType>NUMBER(15)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="80" parent="57" name="USER_ACCESS">
+    <column id="82" parent="57" name="USER_ACCESS">
       <Position>4</Position>
       <DataType>CHAR(1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="81" parent="57" name="SYS_C0041863">
+    <index id="83" parent="57" name="SYS_C0041863">
       <ObjectId>186587</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2018-05-23.09:19:44</CreatedTimestamp>
@@ -353,7 +368,7 @@
       <ColNames>USERNAME</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="82" parent="57" name="SYS_C0041863">
+    <key id="84" parent="57" name="SYS_C0041863">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2018-05-23.09:19:44</ModifiedTimestamp>
       <ColNames>USERNAME</ColNames>
@@ -361,7 +376,7 @@
       <UnderlyingIndexName>SYS_C0041863</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <trigger id="83" parent="57" name="TRG_USER_ID">
+    <trigger id="85" parent="57" name="TRG_USER_ID">
       <ObjectId>186579</ObjectId>
       <CreatedTimestamp>2018-05-23.09:19:44</CreatedTimestamp>
       <ModifiedTimestamp>2018-05-23.09:19:44</ModifiedTimestamp>
