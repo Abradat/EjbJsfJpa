@@ -23,7 +23,9 @@ public class UserController {
     @EJB
     private UserDao userDao;
 
-    private User user = new User();
+    private User userForInsert = new User();
+    private User userForFind = new User();
+    private User userForChange = new User();
 
     private List<User> users;
 
@@ -32,8 +34,6 @@ public class UserController {
     private UIComponent saveComponent;
     private UIComponent findComponent;
     private UIComponent changeComponent;
-    private UIComponent insertAmountComponent;
-    private UIComponent changeAmountComponent;
 
     @PostConstruct
     public void usersInit() {
@@ -63,29 +63,29 @@ public class UserController {
     public void setChangeComponent(UIComponent changeComponent) {
         this.changeComponent = changeComponent;
     }
-
-    public UIComponent getInsertAmountComponent() {
-        return insertAmountComponent;
+    
+    public User getUserForInsert() {
+        return userForInsert;
     }
 
-    public void setInsertAmountComponent(UIComponent insertAmountComponent) {
-        this.insertAmountComponent = insertAmountComponent;
+    public void setUserForInsert(User userForInsert) {
+        this.userForInsert = userForInsert;
     }
 
-    public UIComponent getChangeAmountComponent() {
-        return changeAmountComponent;
+    public User getUserForFind() {
+        return userForFind;
     }
 
-    public void setChangeAmountComponent(UIComponent changeAmountComponent) {
-        this.changeAmountComponent = changeAmountComponent;
+    public void setUserForFind(User userForFind) {
+        this.userForFind = userForFind;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserForChange() {
+        return userForChange;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserForChange(User userForChange) {
+        this.userForChange = userForChange;
     }
 
     public List<User> getUsers() {
@@ -100,33 +100,44 @@ public class UserController {
         return resultUser;
     }
 
+
     public void setResultUser(User resultUser) {
         this.resultUser = resultUser;
     }
 
-    public void insertUser(User user) {
+    public void insertUser() {
         FacesContext context = FacesContext.getCurrentInstance();
-
-        if(user.getAmount() > 999999999) {
-            context.addMessage(insertAmountComponent.getClientId(), new FacesMessage("Amount is invalid"));
+        String message;
+        boolean inserted = true, errorHappened = false;
+        try {
+            inserted = userDao.insertUser(userForInsert);
+        } catch (Exception e) {
+            errorHappened = true;
+        }
+        if(inserted && !errorHappened) {
+            //context.addMessage(saveComponent.getClientId(), new FacesMessage("User Inserted Successfully"));
+            message = "User inserted successfully";
+            User tmpUser = new User(userForInsert.getUserName(), userForInsert.getAmount(), userForInsert.getAccess());
+            users.add(tmpUser);
         }
         else {
-            if(userDao.insertUser(user) == true) {
-                //context.addMessage(saveComponent.getClientId(), new FacesMessage("User Inserted Successfully"));
-                users.add(user);
-
+            if(errorHappened) {
+                message = "Fields must not be empty";
             }
             else {
-                context.addMessage(saveComponent.getClientId(), new FacesMessage("User is already in the database"));
+                message = "User is already in the database";
             }
-        }
+            //context.addMessage(saveComponent.getClientId(), new FacesMessage("User is already in the database"));
 
-        cleanUser();
+            //cleanUser(1);
+        }
+        context.addMessage(saveComponent.getClientId(), new FacesMessage(message));
+        cleanUser(1);
 
     }
 
-    public void readUser(User user) {
-        resultUser = userDao.readUser(user);
+    public void readUser() {
+        resultUser = userDao.readUser(userForFind);
         FacesContext context = FacesContext.getCurrentInstance();
         String message;
         if(resultUser != null) {
@@ -141,47 +152,69 @@ public class UserController {
             message = "User not found";
         }
         context.addMessage(findComponent.getClientId(), new FacesMessage(message));
-        cleanUser();
+        cleanUser(2);
     }
 
-    public void changeUser(User user) {
+    public void changeUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         String message;
-
-        if(user.getAmount() > 999999999) {
-            message = "The amount is invalid";
+        boolean errorHappened = false;
+        int result = -1;
+        try {
+            result = userDao.changeUser(userForChange);
+        }catch (Exception e) {
+            errorHappened = true;
         }
-        else {
-            int result = userDao.changeUser(user);
-            if(result == 1) {
-                message = "Successfully Changed amount";
-                for(User tmpUser : users) {
-                    if(tmpUser.getUserName().equals(user.getUserName()) ) {
-                        tmpUser.setAmount(user.getAmount());
-                    }
+
+        if(result == 1 && !errorHappened) {
+            message = "Successfully Changed amount";
+            for(User tmpUser : users) {
+                if(tmpUser.getUserName().equals(userForChange.getUserName()) ) {
+                    tmpUser.setAmount(userForChange.getAmount());
                 }
             }
-            else if(result == 2) {
-                message = "User does not have write permission";
-            }
-            else {
-                message = "User does not exists";
-            }
+        }
+        else if(result == 2 && !errorHappened) {
+            message = "User does not have write permission";
+        }
+        else if(result == 3 && !errorHappened){
+            message = "User does not exists";
+        }
+        else {
+            message = "Fields must not be empty !";
         }
 
+
         context.addMessage(changeComponent.getClientId(), new FacesMessage(message));
-        cleanUser();
+        cleanUser(3);
     }
 
     private List<User> getUsersFromDB() {
         return userDao.readUsers();
     }
 
-    private void cleanUser() {
-        user.setUserName(null);
+    private void cleanUser(int number) {
+        /*user.setUserName(null);
         user.setAccess(null);
         user.setAmount(null);
+        */
+        if(number == 1) {
+            userForInsert.setUserName(null);
+            userForInsert.setAccess(null);
+            userForInsert.setAmount(null);
+        }
+        else if(number == 2) {
+            userForFind.setUserName(null);
+            userForFind.setAccess(null);
+            userForFind.setAmount(null);
+        }
+        else {
+            userForChange.setUserName(null);
+            userForChange.setAccess(null);
+            userForChange.setAmount(null);
+        }
     }
+
 
     private void redirect(String pageName) {
         try {
