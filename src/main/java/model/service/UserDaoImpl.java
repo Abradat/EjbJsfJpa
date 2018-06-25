@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 import java.util.List;
 
-import model.entity.User;
 
 @Stateless
 public class UserDaoImpl implements UserDao {
@@ -20,13 +19,6 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
     @Override
     public boolean insertUser(User user) {
-        //User tmpUser = entityManager.find(User.class, user.getUserName());
-        //Query query = entityManager.createNamedQuery("SELECT c FROM TB_USER WHERE c.user_name = :user_name", User.class);
-        //System.out.println(tmpUser + "\n\n\n\n\n\n");
-        //TypedQuery<User> query = entityManager.createNamedQuery("User.findByUsername", User.class);
-        //query.setParameter("user_name", user.getUserName());
-        //User tmpUser = entityManager.createQuery()
-        //User tmpUser = query.getSingleResult();
         TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
         query.setParameter("userName", user.getUserName());
         User tmpUser = null;
@@ -50,7 +42,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User readUser(User user) {
 
-        //User myUser = entityManager.find(User.class, user.getUserName());
         User myUser = null;
         TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
         query.setParameter("userName", user.getUserName());
@@ -64,7 +55,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int changeUser(User user) {
-        //User myUser = entityManager.find(User.class, user.getUserName());
         User myUser = null;
         TypedQuery<User> query = entityManager.createNamedQuery(User.FIND_BY_USERNAME, User.class);
         query.setParameter("userName", user.getUserName());

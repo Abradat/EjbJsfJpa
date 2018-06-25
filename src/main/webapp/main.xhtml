@@ -9,79 +9,79 @@
 <h:body>
 
 
-    <h:form>
+    <h:form id="myForm">
         <h2>For Inserting User</h2>
-        <h:outputLabel value="Username" />
-        <h:inputText value="#{userController.userForInsert.userName}">
-        </h:inputText>
+        <p:outputLabel value="Username" />
+        <p:inputText value="#{userController.userForInsert.userName}">
+        </p:inputText>
         <br></br>
-        <h:outputLabel value="Amount" />
-        <h:inputText id="insert_amount"  value="#{userController.userForInsert.amount}" validatorMessage="Amount is not valid for inserting" maxlength="10">
+        <p:outputLabel value="Amount" />
+        <p:inputText id="insert_amount"  value="#{userController.userForInsert.amount}" validatorMessage="Amount is not valid for inserting" maxlength="10">
             <f:convertNumber />
-        </h:inputText>
+        </p:inputText>
         <br></br>
-        <br><h:message for="insert_amount" style="color:red"></h:message></br>
+        <br><p:message for="insert_amount" style="color:red"></p:message></br>
 
 
-        <h:outputLabel value="Access" />
+        <p:outputLabel value="Access" />
 
-        <h:selectOneMenu value = "#{userController.userForInsert.access}">
+        <p:selectOneMenu value = "#{userController.userForInsert.access}">
             <f:selectItem itemValue = "r" itemLabel = "read" />
             <f:selectItem itemValue = "w" itemLabel = "write" />
-        </h:selectOneMenu>
+        </p:selectOneMenu>
 
-        <h:outputLabel id="save" binding="#{userController.saveComponent}"></h:outputLabel>
+        <p:outputLabel id="save" binding="#{userController.saveComponent}"></p:outputLabel>
 
-        <h:commandButton value="Save"
-                         action="#{userController.insertUser()}">
-        </h:commandButton>
-        <h:message for="save" style="color: red"></h:message>
+        <p:commandButton value="Save"
+                         update="myForm" actionListener="#{userController.insertUser()}">
+        </p:commandButton>
+        <p:message for="save" style="color: red"></p:message>
 
         <h2>For Finding User</h2>
-        <h:outputLabel value="Username" />
-        <h:inputText value="#{userController.userForFind.userName}">]
-        </h:inputText>
-        <h:outputLabel id="find" binding="#{userController.findComponent}"></h:outputLabel>
-        <h:message for="find" style="color: red"></h:message>
-        <h:commandButton value="Find"
-                         action="#{userController.readUser()}"></h:commandButton>
+        <p:outputLabel value="Username" />
+        <p:inputText value="#{userController.userForFind.userName}">
+        </p:inputText>
+        <p:outputLabel id="find" binding="#{userController.findComponent}"></p:outputLabel>
 
+        <p:commandButton value="Find"
+                         update="myForm" actionListener="#{userController.readUser()}"></p:commandButton>
+        <p:message for="find" style="color: red"></p:message>
 
         <h2>For changing user's amount</h2>
-        <h:outputLabel value="Username" />
-        <h:inputText value="#{userController.userForChange.userName}">]
-        </h:inputText>
-        <h:outputLabel  value="New Amount" />
-        <h:inputText id="change_amount" value="#{userController.userForChange.amount}" validatorMessage="Amount is not valid for changing" maxlength="10">
+        <p:outputLabel value="Username" />
+        <p:inputText value="#{userController.userForChange.userName}">
+        </p:inputText>
+        <p:outputLabel  value="New Amount" />
+        <p:inputText id="change_amount" value="#{userController.userForChange.amount}" validatorMessage="Amount is not valid for changing" maxlength="10">
             <f:convertNumber />
-        </h:inputText>
-        <br><h:message for="change_amount" style="color:red" /></br>
-        <h:outputLabel id="change" binding="#{userController.changeComponent}"></h:outputLabel>
+        </p:inputText>
+        <br><p:message for="change_amount" style="color:red" /></br>
+        <p:outputLabel id="change" binding="#{userController.changeComponent}"></p:outputLabel>
 
-        <h:commandButton value="Change"
-                         action="#{userController.changeUser()}"></h:commandButton>
+        <p:commandButton value="Change"
+                         update="myForm" actionListener="#{userController.changeUser()}"></p:commandButton>
 
 
-        <h:message for="change" style="color: red"></h:message>
+        <p:message for="change" style="color: red"></p:message>
 
-        <h:dataTable id="myTable" value = "#{userController.users}" var = "user">
+        <p:dataTable id="myTable" value = "#{userController.users}" var = "user">
 
-            <h:column>
+            <p:column>
                 <f:facet name = "header">Name</f:facet>
                 #{user.userName}
-            </h:column>
+            </p:column>
 
-            <h:column>
+            <p:column>
                 <f:facet name = "header">Amount</f:facet>
                 #{user.amount}
-            </h:column>
+            </p:column>
 
-            <h:column>
+            <p:column>
                 <f:facet name = "header">Access</f:facet>
                 #{user.access}
-            </h:column>
+            </p:column>
 
-        </h:dataTable>
+        </p:dataTable>
     </h:form>
 
 </h:body>

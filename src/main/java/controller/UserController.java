@@ -7,8 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import model.entity.User;
@@ -20,12 +22,12 @@ import java.util.List;
 @ManagedBean(name = "userController")
 public class UserController {
 
-    @EJB
-    private UserDao userDao;
 
-    private User userForInsert = new User();
-    private User userForFind = new User();
-    private User userForChange = new User();
+    private @Inject UserDao userDao;
+
+    private User userForInsert;
+    private User userForFind ;
+    private User userForChange ;
 
     private List<User> users;
 
@@ -38,6 +40,9 @@ public class UserController {
     @PostConstruct
     public void usersInit() {
         users = getUsersFromDB();
+        userForInsert = new User();
+        userForChange = new User();
+        userForFind = new User();
     }
 
     public UIComponent getSaveComponent() {
@@ -63,7 +68,7 @@ public class UserController {
     public void setChangeComponent(UIComponent changeComponent) {
         this.changeComponent = changeComponent;
     }
-    
+
     public User getUserForInsert() {
         return userForInsert;
     }
